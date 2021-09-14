@@ -1,11 +1,15 @@
+package br.edu.ifpr.pgua.eic.tads.banco.controles;
 
 import java.util.ArrayList;
+
+import br.edu.ifpr.pgua.eic.tads.banco.modelos.ClientePF;
+import br.edu.ifpr.pgua.eic.tads.banco.modelos.ContaCorrente;
 
 public class Banco {
     
     private String nome;
     private String email;
-    private ArrayList<Cliente> clientes;
+    private ArrayList<ClientePF> clientes;
     private ArrayList<ContaCorrente> contas;
 
     public Banco(String nome, String email) {
@@ -15,17 +19,20 @@ public class Banco {
         contas = new ArrayList<>();
     }
 
-    public boolean adicionaCliente(Cliente cliente){
+    public boolean adicionaCliente(ClientePF cliente){
         
         //não pode haver cpf duplicado
-        
-        clientes.add(cliente);
-        return true;
+        if(buscaCliente(cliente.getCpf()) == null){
+            clientes.add(cliente);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean adicionaConta(ContaCorrente conta){
         
-        if(buscaConta(conta.getNumero(), conta.getAgencia())!=null){
+        if(buscaConta(conta.getNumero(), conta.getAgencia()) == null){
             contas.add(conta);
             return true;
         }
@@ -33,7 +40,7 @@ public class Banco {
     }
 
     //procurar na coleção de clientes um cliente com o CPF
-    public Cliente buscaCliente(String cpf){
+    public ClientePF buscaCliente(String cpf){
         
         //percorer todos os clientes        
         for(int i=0;i<clientes.size();i++){
@@ -46,6 +53,7 @@ public class Banco {
     }
     
     public ContaCorrente buscaConta(String numero, String agencia){
+        
         for(ContaCorrente c:contas){
             if(c.getAgencia().equals(agencia) && c.getNumero().equals(numero)){
                 return c;
@@ -66,7 +74,7 @@ public class Banco {
         return this.nome;
     }
 
-    public ArrayList<Cliente> getClientes(){
+    public ArrayList<ClientePF> getClientes(){
         return this.clientes;
     }
 

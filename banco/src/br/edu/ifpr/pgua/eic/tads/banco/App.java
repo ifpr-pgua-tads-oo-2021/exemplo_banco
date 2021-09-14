@@ -1,6 +1,11 @@
+package br.edu.ifpr.pgua.eic.tads.banco;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import br.edu.ifpr.pgua.eic.tads.banco.controles.Banco;
+import br.edu.ifpr.pgua.eic.tads.banco.modelos.ClientePF;
+import br.edu.ifpr.pgua.eic.tads.banco.modelos.ContaCorrente;
 
 public class App {
     
@@ -22,7 +27,7 @@ public class App {
         Scanner scan = new Scanner(System.in);
 
         String nome,cpf,agencia,numero,email;
-        Cliente cliente;
+        ClientePF cliente;
         ContaCorrente conta;
         double valor;
         int opcao,anoNascimento;
@@ -45,7 +50,7 @@ public class App {
                     System.out.println("Digite o ano de nascimento:");
                     anoNascimento = scan.nextInt();
 
-                    cliente = new Cliente(cpf, nome, anoNascimento, email);
+                    cliente = new ClientePF(nome,email,cpf, anoNascimento);
 
                     if(banco.adicionaCliente(cliente)){
                         System.out.println("Cliente adicionado!");
@@ -80,8 +85,6 @@ public class App {
                     System.out.println("Opção inválida!");
                     break;
             }
-
-
 
             showMenu();
             opcao = scan.nextInt();
