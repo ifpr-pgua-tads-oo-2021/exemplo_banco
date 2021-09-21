@@ -18,10 +18,7 @@ public class Banco {
     
     private String nome;
     private String email;
-
-    private ArrayList<ClientePF> clientesPF;
-    private ArrayList<ClientePJ> clientesPJ;
-    
+        
     private ArrayList<Cliente> clientes;
 
     private ArrayList<ContaCorrenteSimples> contasSimples;
@@ -32,59 +29,53 @@ public class Banco {
     public Banco(String nome, String email) {
         this.nome = nome;
         this.setEmail(email);
-        this.clientesPF = new ArrayList<>();
-        this.clientesPJ = new ArrayList<>();
         
+        this.clientes = new ArrayList<>();
+
         this.contasSimples = new ArrayList<>();
         this.contasEspecial = new ArrayList<>();
         this.contasPoupanca = new ArrayList<>();
     }
 
-    public boolean adicionaClientePF(ClientePF cliente){
-        
-        //não pode haver cpf duplicado
-        if(buscaClientePF(cliente.getCpf()) == null){
-            clientesPF.add(cliente);
+    private boolean adicionaCliente(Cliente cliente){
+        if(buscaCliente(cliente.getDocumento())==null){
+            clientes.add(cliente);
             return true;
         }
-
         return false;
     }
 
-    //procurar na coleção de clientes um cliente com o CPF
-    public ClientePF buscaClientePF(String cpf){
-        
-        //percorer todos os clientes        
-        for(int i=0;i<clientesPF.size();i++){
-            if(clientesPF.get(i).getCpf().equals(cpf)){
-                return clientesPF.get(i);
+
+    private Cliente buscaCliente(String doc){
+
+        for(int i=0;i<clientes.size();i++){
+            Cliente cliente = clientes.get(i);
+
+            if(cliente.getDocumento().equals(doc)){
+                return cliente;
             }
         }
-
         return null;
+    }
+
+
+    public boolean adicionaClientePF(ClientePF cliente){
+        return adicionaCliente(cliente);
+    }
+      
+     //procurar na coleção de clientes um cliente com o CPF
+    public ClientePF buscaClientePF(String cpf){
+        return (ClientePF)buscaCliente(cpf); //percorer todos os clientes        
     }
 
     public boolean adicionaClientePJ(ClientePJ cliente){
         
-        //não pode haver cpf duplicado
-        if(buscaClientePJ(cliente.getCnpj()) == null){
-            clientesPJ.add(cliente);
-            return true;
-        }
-
-        return false;
+        return adicionaCliente(cliente);
     }
 
     public ClientePJ buscaClientePJ(String cnpj){
         
-        //percorer todos os clientes        
-        for(int i=0;i<clientesPJ.size();i++){
-            if(clientesPJ.get(i).getCnpj().equals(cnpj)){
-                return clientesPJ.get(i);
-            }
-        }
-
-        return null;
+        return (ClientePJ)buscaCliente(cnpj);
     }
     
     public boolean adicionaContaSimples(ContaCorrenteSimples conta){
@@ -156,12 +147,12 @@ public class Banco {
         return this.nome;
     }
 
-    public ArrayList<ClientePF> getClientesPF(){
-        return this.clientesPF;
+    public ArrayList<Cliente> getClientesPF(){
+        return this.clientes;
     }
 
-    public ArrayList<ClientePJ> getClientesPJ(){
-        return this.clientesPJ;
+    public ArrayList<Cliente> getClientesPJ(){
+        return this.clientes;
     }
 
     public ArrayList<ContaCorrenteSimples> getContasSimples(){
@@ -175,5 +166,4 @@ public class Banco {
     public ArrayList<ContaPoupanca> getContasPoupanca(){
         return this.contasPoupanca;
     }
-
 }

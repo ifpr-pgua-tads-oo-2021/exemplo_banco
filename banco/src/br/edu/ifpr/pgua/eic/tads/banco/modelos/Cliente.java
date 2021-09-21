@@ -1,5 +1,5 @@
 package br.edu.ifpr.pgua.eic.tads.banco.modelos;
-public class Cliente {
+public abstract class Cliente {
     
     protected String nome;
     protected String email;
@@ -9,6 +9,8 @@ public class Cliente {
         this.nome = nome;
         this.email = email;
     }
+
+    public abstract String getDocumento();
 
     public String getEmail() {
         return email;

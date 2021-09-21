@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.edu.ifpr.pgua.eic.tads.banco.controles.Banco;
+import br.edu.ifpr.pgua.eic.tads.banco.modelos.Cliente;
 import br.edu.ifpr.pgua.eic.tads.banco.modelos.ClientePF;
 import br.edu.ifpr.pgua.eic.tads.banco.modelos.ClientePJ;
 import br.edu.ifpr.pgua.eic.tads.banco.modelos.ContaCorrente;
@@ -195,12 +196,18 @@ public class App {
                 case 8:
                     System.out.println("Listando todos os clientes");
                     System.out.println("---PF---");
-                    for (ClientePF cliente : banco.getClientesPF()) {
-                        System.err.println("\t" + cliente.toString());
+                    for (Cliente cliente : banco.getClientesPF()) {
+                        if(cliente instanceof ClientePF){
+                            System.err.println("\t" + cliente.toString());
+                        }
+                        
                     }
                     System.out.println("---PJ---");
-                    for (ClientePF cliente : banco.getClientesPF()) {
-                        System.err.println("\t" + cliente.toString());
+                    for (Cliente cliente : banco.getClientesPJ()) {
+                        if(cliente instanceof ClientePJ){
+                            System.err.println("\t" + cliente.toString());
+                        }
+                        
                     }
                     System.out.println("######");
                     break;
@@ -233,7 +240,7 @@ public class App {
                         valor = scan.nextDouble();
 
                         contaSimples.sacar(valor);
-                        
+
                     } else {
                         System.out.println("Conta não encontrada!");
                     }

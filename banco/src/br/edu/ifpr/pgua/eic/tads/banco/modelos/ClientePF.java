@@ -14,6 +14,12 @@ public class ClientePF extends Cliente{
         this.anoNascimento = anoNascimento;
     }
 
+
+    @Override
+    public String getDocumento(){
+        return this.cpf;
+    }
+
     public String getCpf(){
         return this.cpf;
     }
